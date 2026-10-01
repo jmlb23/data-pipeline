@@ -15,9 +15,10 @@ object Application {
     fun main(vararg args: String) {
         val sEnv = StreamExecutionEnvironment.getExecutionEnvironment()
 
+        //TODO: remove hardcoded crap
         val kafkaSource = KafkaSource.builder<String>()
             .setBootstrapServers("localhost:9092")
-            .setTopics("input-topic")
+            .setTopics("bluesky-jetstream")
             .setGroupId("my-group")
             .setStartingOffsets(OffsetsInitializer.earliest())
             .setValueOnlyDeserializer(SimpleStringSchema())

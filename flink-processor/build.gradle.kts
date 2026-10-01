@@ -10,8 +10,11 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.apache.flink:flink-clients:2.3.0")
+    implementation("org.apache.flink:flink-connector-base:2.3.0")
     implementation("org.apache.flink:flink-connector-kafka:5.0.0-2.2")
     implementation("org.apache.flink:flink-streaming-java:2.3.0")
+    implementation("org.slf4j:slf4j-simple:2.0.20")
 }
 
 group = "com.github.jmlb23.data"
