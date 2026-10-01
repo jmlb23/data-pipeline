@@ -15,6 +15,7 @@ import io.smallrye.reactive.messaging.MutinyEmitter
 import kotlinx.coroutines.launch
 import org.eclipse.microprofile.reactive.messaging.Channel
 
+//TODO: Remove hardcoded path and URI use properties
 @ApplicationScoped
 @WebSocketClient(path = "/xrpc/network.bsky.jetstream.subscribeEvents?collections=app.bsky.feed.post")
 class BlueSkyClient(
