@@ -13,5 +13,6 @@ pluginManagement {
 rootProject.name="data-lake"
 
 include(
-    ":kafka-producer"
+    ":kafka-producer",
+    ":flink-processor"
 )
