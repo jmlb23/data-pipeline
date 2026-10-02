@@ -10,5 +10,6 @@ rootProject.name="data-lake"
 
 include(
     ":kafka-producer",
-    ":flink-processor"
+    ":flink-processor",
+    ":kafka-streams"
 )
