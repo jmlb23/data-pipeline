@@ -1,5 +1,6 @@
 package com.github.jmlb23.data.kafka
 
+import io.quarkus.websockets.next.CloseReason
 import io.quarkus.websockets.next.OnClose
 import jakarta.enterprise.context.ApplicationScoped
 import kotlinx.coroutines.delay
@@ -30,17 +31,14 @@ class BlueSkyClient(
     }
 
     @OnTextMessage
-    fun onMessage(message: String): Uni<String> {
+    fun onMessage(message: String) {
         logger.info(message)
-        return kafkaEmitter
-            .send(message)
-            .map { "ok" }
-            .onFailure()
-            .recoverWithItem("ko")
+        kafkaEmitter.sendAndAwait(message)
     }
 
     @OnClose
-    fun onClose() {
+    fun onClose(closeReason: CloseReason) {
+        logger.error("WebSocket was closed with reason: ${closeReason.message} and code: ${closeReason.code}")
         kafkaEmitter.complete()
     }
 
