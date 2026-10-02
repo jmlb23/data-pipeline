@@ -7,6 +7,7 @@ import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsIni
 import org.apache.flink.datastream.api.ExecutionEnvironment
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.functions.sink.PrintSink
+import org.apache.flink.util.ParameterTool
 
 
 object Application {
@@ -15,10 +16,15 @@ object Application {
     fun main(vararg args: String) {
         val sEnv = StreamExecutionEnvironment.getExecutionEnvironment()
 
+        //dirty crap to access the resources folder and the properties file
+        val res = Thread.currentThread().contextClassLoader.getResource("application.properties")
+
+        val props = ParameterTool.fromPropertiesFile(res.path)
+
         //TODO: remove hardcoded crap
         val kafkaSource = KafkaSource.builder<String>()
-            .setBootstrapServers("localhost:9092")
-            .setTopics("bluesky-jetstream")
+            .setBootstrapServers(props.get("kafka.bootstrap"))
+            .setTopics(props.get("kafka.topic"))
             .setGroupId("my-group")
             .setStartingOffsets(OffsetsInitializer.earliest())
             .setValueOnlyDeserializer(SimpleStringSchema())
