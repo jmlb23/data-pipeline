@@ -46,6 +46,6 @@ class BlueSkyClient(
 
     @OnError
     fun onError(throwable: Throwable) {
-        throwable.printStackTrace()
+        logger.error("something happened with error: ${throwable.message}")
     }
 }
