@@ -11,20 +11,17 @@ import org.apache.kafka.common.serialization.Serializer
 
 
 class BlueSkyMessageLocalSerde : Serde<Message> {
+    val serializer = Message.serializer()
 
-    override fun deserializer(): Deserializer<Message?> = object : Deserializer<Message?> {
-        override fun deserialize(topic: String?, data: ByteArray?): Message? {
-            return data?.let {
-                Avro.decodeFromByteArray<Message>(Avro.schema<Message>(), it)
-            }
+    override fun deserializer(): Deserializer<Message?> = { topic: String?, data: ByteArray? ->
+        data?.let {
+            Avro.decodeFromByteArray<Message>(serializer, it)
         }
     }
 
-    override fun serializer(): Serializer<Message?> = object : Serializer<Message?> {
-        override fun serialize(topic: String?, data: Message?): ByteArray? {
-            return data?.let {
-                Avro.encodeToByteArray(Avro.schema<Message>(), data)
-            }
+    override fun serializer(): Serializer<Message?> = { topic: String?, data: Message? ->
+        data?.let {
+            Avro.encodeToByteArray(serializer, data)
         }
     }
 
