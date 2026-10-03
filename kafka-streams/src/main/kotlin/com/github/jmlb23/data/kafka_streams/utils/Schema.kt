@@ -3,21 +3,16 @@ package com.github.jmlb23.data.kafka_streams.utils
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlinx.serialization.encoding.*
-import java.time.String
 
 @Serializable
 data class Message(
-    @SerialName("\$type")
     val type: String? = null,
-
     val payload: Payload? = null
 )
 
 @Serializable
 data class Payload(
-    @SerialName("\$type")
     val type: String? = null,
-
     val cid: String? = null,
     val collection: String? = null,
     val did: String? = null,
@@ -32,9 +27,7 @@ data class Payload(
 
 @Serializable
 data class PayloadRecord(
-    @SerialName("\$type")
     val type: String? = null,
-
     val createdAt: String? = null,
     val embed: Embed? = null,
     val langs: List<String>? = null,
@@ -43,9 +36,8 @@ data class PayloadRecord(
 
 @Serializable
 data class Embed(
-    @SerialName("\$type")
     val type: String? = null,
-
+    val external: External? = null,
     val record: EmbedRecord? = null
 )
 
@@ -53,4 +45,26 @@ data class Embed(
 data class EmbedRecord(
     val cid: String? = null,
     val uri: String? = null
+)
+
+
+@Serializable
+data class External(
+    val uri: String? = null,
+    val title: String? = null,
+    val description: String? = null,
+    val thumb: BlobRef? = null
+)
+
+@Serializable
+data class BlobRef(
+    val type: String? = null,
+    val mimeType: String? = null,
+    val size: Int? = null,
+    val ref: LinkRef? = null
+)
+
+@Serializable
+data class LinkRef(
+    val link: String? = null
 )
