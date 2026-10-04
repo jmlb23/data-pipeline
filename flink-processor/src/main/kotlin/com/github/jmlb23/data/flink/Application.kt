@@ -1,10 +1,20 @@
 package com.github.jmlb23.data.flink
 
+
+import com.github.avrokotlin.avro4k.Avro
+import com.github.avrokotlin.avro4k.schema
+import com.github.jmlb23.data.core.Message
+import com.github.jmlb23.data.flink.util.AvroSerializerWithoutSchemaRegistry
+import org.apache.avro.generic.GenericRecord
+import org.apache.avro.specific.SpecificRecord
+
 import org.apache.flink.api.common.eventtime.WatermarkStrategy
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.connector.kafka.source.KafkaSource
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer
+import org.apache.flink.connector.kafka.source.reader.deserializer.KafkaRecordDeserializationSchema
 import org.apache.flink.datastream.api.ExecutionEnvironment
+import org.apache.flink.formats.avro.AvroDeserializationSchema
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment
 import org.apache.flink.streaming.api.functions.sink.PrintSink
 import org.apache.flink.util.ParameterTool
@@ -21,13 +31,16 @@ object Application {
 
         val props = ParameterTool.fromPropertiesFile(res.path)
 
+        val schema = Avro.schema(Message.serializer())
         //TODO: remove hardcoded crap
-        val kafkaSource = KafkaSource.builder<String>()
+        val kafkaSource = KafkaSource.builder<Message>()
             .setBootstrapServers(props.get("kafka.bootstrap"))
             .setTopics(props.get("kafka.topic"))
             .setGroupId("my-group")
             .setStartingOffsets(OffsetsInitializer.earliest())
-            .setValueOnlyDeserializer(SimpleStringSchema())
+            .setValueOnlyDeserializer(
+                AvroSerializerWithoutSchemaRegistry()
+            )
             .build()
 
         val kafkaDStream = sEnv.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "kafka-bluesky")

@@ -1,4 +1,4 @@
-package com.github.jmlb23.data.kafka_streams.utils
+package com.github.jmlb23.data.core
 
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*

@@ -16,6 +16,7 @@ val quarkusPlatformVersion: String by project
 
 dependencies {
     implementation(enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
+    implementation(project(":core"))
     implementation("io.quarkus:quarkus-messaging-kafka")
     implementation("io.quarkus:quarkus-kafka-streams:3.40.0")
     implementation("com.github.avro-kotlin.avro4k:avro4k-core:2.12.0")

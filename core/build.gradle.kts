@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm") version "2.4.10"
-    application
+    kotlin("plugin.serialization") version "2.4.10"
 }
 
 repositories {
@@ -9,23 +9,13 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":core"))
     implementation("com.github.avro-kotlin.avro4k:avro4k-core:2.12.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.apache.flink:flink-clients:2.3.0")
-    implementation("org.apache.flink:flink-connector-base:2.3.0")
-    implementation("org.apache.flink:flink-connector-kafka:5.0.0-2.2")
-    implementation("org.apache.flink:flink-streaming-java:2.3.0")
-    implementation("org.apache.flink:flink-avro:2.3.0")
-    implementation("org.slf4j:slf4j-simple:2.0.20")
 }
 
 group = "com.github.jmlb23.data"
 version = "1.0.0-SNAPSHOT"
-
-application {
-    mainClass = "com.github.jmlb23.data.flink.Application"
-}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21

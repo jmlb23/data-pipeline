@@ -4,7 +4,7 @@ import com.github.avrokotlin.avro4k.Avro
 import com.github.avrokotlin.avro4k.encodeToByteArray
 import com.github.avrokotlin.avro4k.schema
 import com.github.jmlb23.data.kafka_streams.utils.BlueSkyMessageLocalSerde
-import com.github.jmlb23.data.kafka_streams.utils.Message
+import com.github.jmlb23.data.core.Message
 import jakarta.enterprise.context.ApplicationScoped
 import jakarta.enterprise.inject.Produces
 import jakarta.inject.Inject
