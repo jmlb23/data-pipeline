@@ -54,7 +54,7 @@ object Application {
             .filter { it != null }
             .map { 1L }
             .keyBy { "COUNT" }
-            .reduce { acc, new -> acc + 1 }
+            .reduce { acc, new -> acc + new }
 
         groupByCid.sinkTo(PrintSink())
 
