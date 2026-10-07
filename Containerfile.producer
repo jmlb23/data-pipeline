@@ -1,0 +1,21 @@
+FROM quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-25 AS build 
+
+USER root
+
+WORKDIR /build
+
+COPY . .
+
+RUN ls -lah
+
+RUN ./gradlew :kafka-producer:build -Dquarkus.native.enabled=true -Dquarkus.native.builder-image=graalvm -Dquarkus.package.jar.enabled=false
+
+RUN ./kafka-producer/build/kafka-producer-1.0.0-SNAPSHOT-runner
+
+FROM quay.io/quarkus/quarkus-distroless-image:2.0
+
+WORKDIR /app
+
+COPY --from=build /build/kafka-producer/build/kafka-producer-1.0.0-SNAPSHOT-runner ./app
+
+ENTRYPOINT [ "./app" ]
