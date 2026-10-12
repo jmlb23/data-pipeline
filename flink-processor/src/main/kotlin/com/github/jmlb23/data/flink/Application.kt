@@ -64,6 +64,7 @@ object Application {
         val groupByCid = kafkaDStream
             .map { it.payload?.record?.text }
             .flatMap(object : FlatMapFunction<String?, String?> {
+                //it fucks my mind that flatMap isnt like flatMap :: Monad m => m a -> (a -> m b)
                 override fun flatMap(value: String?, out: Collector<String?>) {
                     value?.split(' ')?.forEach { out.collect(it) }
                 }
