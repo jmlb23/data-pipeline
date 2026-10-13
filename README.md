@@ -11,4 +11,7 @@
     3. right now due to the absence of SR i will implement my own serde 
 
 - module flink processor
-    1. 
+    1. consume the kafka avro enriched topic
+    2. convert it to a stream of words by flatMap it Monad m => m a -> (a -> m b)
+    3. remove stop words (it isn't really well done, the list is small and in english)
+    4. do tumbling windows of 1 minute or 30 seconds to calculate top 10 words most used
